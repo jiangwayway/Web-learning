@@ -4,7 +4,7 @@
 **参考手册**：[mdn官方参考](https://developer.mozilla.org/zh-CN/)
 
 ### HTML学习
-
+基础内容汇总：[html基础内容总结](https://juejin.cn/post/7133081535334318117)
 
 ### CSS学习
 基础拾遗：[CSS基础总结](https://juejin.cn/post/6941206439624966152)
