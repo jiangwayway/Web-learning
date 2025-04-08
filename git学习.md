@@ -1,7 +1,16 @@
 # git学习
+
+### 1.思维导图
+#### (1)总览
 ![git思维导图](https://github.com/jiangwayway/Web-learning/blob/dev/image/git%E5%AD%A6%E4%B9%A0.jpeg?raw=true)
 
-### 1.操作命令
+#### (2)团队协作流程图
+![团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/dev/image/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+
+#### (3)跨团队协作流程图
+![跨团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/dev/image/%E8%B7%A8%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+
+### 2.操作命令
 #### 拉取远程仓库的更新
 ```js
 git pull（相当于git fetch+git merge）
@@ -26,7 +35,7 @@ git fetch
 ```
 git push <remote_name> <branch_name>
 ```
-### 2.查看命令
+### 3.查看命令
 
 #### 查看分支
 ```
