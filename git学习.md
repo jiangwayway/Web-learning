@@ -1,5 +1,6 @@
 # git学习
-![git思维导图](image/git学习.jpeg#pic_center =600x600)
+![git思维导图](https://github.com/jiangwayway/Web-learning/blob/dev/image/git%E5%AD%A6%E4%B9%A0.jpeg?raw=true)
+
 ### 1.操作命令
 #### 拉取远程仓库的更新
 ```js
