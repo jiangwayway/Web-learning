@@ -2,13 +2,13 @@
 
 ### 1.思维导图
 #### (1)总览
-![git思维导图](https://github.com/jiangwayway/Web-learning/blob/dev/image/git%E5%AD%A6%E4%B9%A0.jpeg?raw=true)
+![git思维导图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/master/image/git%E5%AD%A6%E4%B9%A0.jpeg)
 
 #### (2)团队协作流程图
-![团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/dev/image/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+![团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/master/image/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 #### (3)跨团队协作流程图
-![跨团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/dev/image/%E8%B7%A8%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+![跨团队协作流程图](https://raw.githubusercontent.com/jiangwayway/Web-learning/refs/heads/master/image/%E8%B7%A8%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 ### 2.本地库操作
 #### 查看工作区和暂存区的状态(是否有文件修改未提交)
