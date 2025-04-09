@@ -95,7 +95,8 @@ git fetch
 ```
 #### 新建分支
 ```
-git branch 分支名
+git branch 分支名 //本地分支
+git push 远程库 分支名 //新建远程分支
 ```
 #### 删除分支
 ```
