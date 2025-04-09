@@ -139,5 +139,52 @@ git merge 远程库/远程分支 //合并远程分支，在合并之前需要使
 #### 跳到最后一行：字母G
 #### 跳到第n行：ng
 
-### 6.常见操作流程
-#### 克隆远程仓库
+### 6.git提交规范
+#### 编译相关的修改，例如发布版本、对项目构建或者依赖的改动
+```
+git commit -m "build: 提示消息"
+```
+#### 新功能
+```
+git commit -m "feat: 提示消息"
+```
+#### 修改bug
+```
+git commit -m "fix: 提示消息"
+```
+#### 文档修改
+```
+git commit -m "docs: 提示消息"
+```
+#### 优化相关，比如提升性能、体验
+```
+git commit -m "perf: 提示消息"
+```
+#### 测试用例修改
+```
+git commit -m "test: 提示消息"
+```
+#### 代码格式修改, 注意不是 css 修改
+```
+git commit -m "style: 提示消息"
+```
+#### 重构
+```
+git commit -m "refactor: 提示消息"
+```
+#### 代码回滚
+```
+git commit -m "revert: 提示消息"
+```
+#### 持续集成修改
+```
+git commit -m "ci: 提示消息"
+```
+#### 配置修改
+```
+git commit -m "config: 提示消息"
+```
+#### 其他改动
+```
+git commit -m "chore: 提示消息"
+```
