@@ -31,6 +31,18 @@ git reflog
 ```
 git reset --hard 索引值 //--soft仅重置本地库指针，--mixed重置本地库指针和暂存区，--hard重置本地库指针，暂存区和工作区
 ```
+#### 撤销工作区的修改
+```
+git checkout .
+git checkout -- 文件名 //撤销单个文件的修改 
+```
+#### 撤销工作区和暂存区的修改
+```
+git checkout -f //所有文件
+或者
+git reset HEAD //所有文件
+git reset HEAD 文件名 //单个文件 
+```
 #### 将内容添加到暂存区
 ```
 git add .
@@ -99,9 +111,21 @@ git checkout 远程库/分支名 //切换远程分支
 ```
 git branch --set-upstream-to=远程库/分支名
 ```
-#### 合并分支
+#### 新建本地分支的同时关联远程分支
 ```
-git branch 分支名
+git checkout -b 本地分支 origin/远程分支 
+相当于：
+git checkout -b 本地分支
+git branch --set-upstream-to=远程库/分支名
+相当于：
+git branch 本地分支
+git checkout 本地分支
+git branch --set-upstream-to=远程库/分支名
+```
+#### 分支合并
+```
+git merge 分支名 //合并本地分支
+git merge 远程库/远程分支 //合并远程分支，在合并之前需要使用"git fetch 远程库 分支名"命令将远程分支拉取到本地
 ```
 ### 5.分页器操作
 #### 退出查看：字母q
