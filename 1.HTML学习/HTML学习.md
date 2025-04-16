@@ -1,0 +1,593 @@
+# HTML学习
+### 一、常用标签
+
+#### 1.标题标签
+
+```html
+<h1>This is a heading</h1>
+```
+
+#### 2.段落标签
+
+```html
+<p>This is a paragraph</p>
+```
+
+#### 3.文本格式化标签
+
+| 标签| 描述   |
+| :--------------------------- | :----- |
+| `<strong></strong>`或者`<b></b>` | 加粗   |
+|` <em></em>`或者`<i></i>`         | 斜体   |
+| `<ins></ins>`                  | 下划线 |
+| `<del></del>`                  | 删除线 |
+
+#### 4.无语义标签
+
+| 标签          | 描述                                       |
+| :------------ | :----------------------------------------- |
+| `<div></div> `  | 定义文档中的分区或节（division/section）。 |
+| `<span></span>` | 定义 span，用来组合文档中的行内元素。      |
+
+#### 5.图像标签
+
+```html
+<img src="1.png" alt="替换文字" title="提示文本" width="500px">//width和height一般只设置一个，另一个等比例缩放
+```
+
+#### 6.超链接标签
+
+```html
+<a href="跳转目标" target="目标窗口的弹出方式"> 文本或图像 </a> //target中_self为默认值，_blank为在新窗口中打开方式。
+```
+
+#### 7.表格标签
+
+<table align="center" border="1" cellpadding="20" cellspacing="0" width="500">
+        <caption>
+            标题
+        </caption>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>学号</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>张一</td>
+                <td>11111</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>张二</td>
+                <td>22222</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>总结</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+```html
+<!-- 合并两列 -->
+<td colspan="2"></td>
+<!-- 合并两行 -->
+<td rowspan="2"></td>
+<!-- 合并两行两列 -->
+<td colspan="2" rowspan="2"></td>
+```
+
+#### 8.列表标签
+
+```html
+<!-- 无序列表 -->
+<ul>
+    <li>
+        <p>1</p>
+    </li>
+    <li>
+        <p>2</p>
+    </li>
+</ul>
+<!-- 有序列表 -->
+<ol>
+    <li>
+        <p>1</p>
+    </li>
+    <li>
+        <p>2</p>
+    </li>
+</ol>
+<!-- 自定义列表 -->
+<dl>
+    <dt>
+        关注我们
+    </dt>
+    <dd>
+        首页
+    </dd>
+    <dd>
+        测试
+    </dd>
+</dl>
+```
+
+
+
+#### 9.表单标签
+
+```html
+<form action="url地址" method="post" name="form1">
+    <input type="button" name="按钮名字" value="按钮">
+    <select>
+        <option>1</option>
+        <option>2</option>
+        <option selected="selected">3</option>
+    </select>
+    <textarea rows="2" cols="10">
+        我是测试
+    </textarea>
+</form>
+```
+
+| 类型 | 描述 |
+| :-| :-|
+| button| 没有默认行为的按钮，上面显示 `value`属性的值，默认为空。 |
+| checkbox | 复选框，可将其值设为选中或未选中。|
+| date| 输入日期的控件（年、月、日，不包括时间）。在支持的浏览器激活时打开日期选择器或年月日的数字滚轮。 |
+| email | 编辑邮箱地址的字段。类似 `text` 输入，但在支持的浏览器和带有动态键盘的设备上会有验证参数和相应的键盘。 |
+| file | 让用户选择文件的控件。使用 `accept` 属性规定控件能选择的文件类型。 |
+| hidden| 不显示的控件，其值仍会提交到服务器。举个例子，右边就是一个隐形的控件。 |
+| month| 输入年和月的控件，没有时区。                                 |
+| number| 用于输入数字的控件。如果支持的话，会显示滚动按钮并提供缺省验证（即只能输入数字）。拥有动态键盘的设备上会显示数字键盘。 |
+| password| 单行的文本区域，其值会被遮盖。如果站点不安全，会警告用户。   |
+| radio| 单选按钮，允许在多个拥有相同 `name` 值的选项中选中其中一个。 |
+| range| 此控件用于输入不需要精确的数字。控件是一个范围组件，默认值为正中间的值。同时使用 `min` 和 `max`来规定可接受值的范围。 |
+| reset | 此按钮将表单的所有内容重置为默认值。不推荐使用该类型。       |
+| search| 用于搜索字符串的单行文字区域。输入文本中的换行会被自动去除。在支持的浏览器中可能有一个删除按钮，用于清除整个区域。拥有动态键盘的设备上的回车图标会变成搜索图标。 |
+| submit| 用于提交表单的按钮。                                         |
+| tel | 用于输入电话号码的控件。拥有动态键盘的设备上会显示电话数字键盘。 |
+| text| 默认值。单行的文本字段，输入值中的换行会被自动去除。         |
+| time| 用于输入时间的控件，不包括时区。     |
+| week| 用于输入以年和周数组成的日期，不带时区。 |
+
+**input标签属性**
+
+| 属性 | 类型| 描述 |
+| :-| :- | :-|
+| `name`| 所有类型 | 表单的控件名称，作为键值对的一部分与表单一同提交 |
+| `value`| 所有类型 | 表单控件的初始值 |
+| `checked`| `checkbox`、`radio` | 控件是否选中  |
+| `maxlength`| `text`、`search`、`url`、`tel`、`email`、`password` | `value` 的最大长度（字符数）|
+
+### 二、HTML5新特性
+
+#### 1.语义化标签
+Q：对整个HTML结构进行语义化的规范操作有什么好处？
+
+- 有利于SEO（Search Engine Optimization 搜索引擎优化），和搜索引擎建立良好的沟通，有助于爬虫爬取更多有效的信息。因为爬虫依赖于标签来确定上下文和各个关键字的权重。
+- 方便其他设备的解析（屏幕阅读器，移动设备），以有意义的方式来渲染网页。
+- 方便团队开发和维护，增加代码可读性，遵循标准，减少差异化。
+
+```
+<!--header:网页的头部，作为一个网页内容快的标题-->
+<header></header>
+
+<!--nav:导航栏部分，定于整个页面的主要导航部分-->
+<nav></nav>
+
+<!--section：网页的一个内容区块-->
+<section></section>
+
+<!--aside：侧边栏，可以是相关链接或者资料-->
+<aside></aside>
+
+<!--artical：区块内的一个独立区域，定义自成一体独立的内容-->
+<artical></artical>
+
+<!--footer:网页的尾部，可以是作者，版权信息，附录等等-->
+<footer></footer>
+```
+#### 2.增强型表单
+主要包括新增的表单类型和新增的表单属性（详细见上部分9）
+
+#### 3.视频和音频标签
+很多的视频都是通过插件（比如flash）来实现的，但并不是所有的浏览器都拥有相同的插件，为了能让视频和音频在网页内播放成功，HTML5规定了一种通过video，audio来包含视频播放的标准。
+
+##### （1）video标签
+支持格式有ogg，MP3，webm
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>video标签</title>
+    <style>
+
+    </style>
+</head>
+<body>
+   <video src="xxx.ogg"></video>
+   <video src="xxx.mp4"></video>
+   <!--可以嵌套多个video标签，用于表现同一个播放源的多种播放方式，第一个视频格式不支持的时候会轮到下一个标签，直到成功-->
+   Sorry, your browser doesn't support video. Try another browser.
+</body>
+</html>
+```
+video的方法，属性，事件可以使用js来控制。
+
+- 方法：play(),pause(),load(),分别是播放，停止，加载方法。
+
+- 属性：width,height,controls。width和height属性值为像素或者百分比，功能是设置播放窗口的宽度和高度。controls属性值为boolean，功能是控制播放条。
+
+- 控制：使用DOM
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>video</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+      <button onclick="playPause">play/pause</button>
+      <button onclick="makeBigger">bigger</button>
+      <button onclick="makeSmaller">smaller</button>
+      <button onclick="makeNormal">normal</button>
+    </div>
+  <video id="myVideo" width="420">
+      <source src="xxx.ogg">
+      <source src="xxx.mp4">
+    Sorry, your browser doesn't support video. Try another browser.
+  </video>
+</body>
+<script>
+    var myVideo = document.getElementById("myVideo");
+
+    function playPause(){
+        if(myVideo.paused)
+        myVideo.play();
+    }
+
+    function makeBigger(){
+        myVideo.width = 560;
+    }
+
+    function makeSmaller(){
+        myVideo.width = 320;
+    }
+
+    function makeNormal(){
+        myVideo.width = 420;
+    }
+</script>
+</html>
+```
+##### (2)audio标签
+支持格式有ogg,Wav,mp3，audio可以实现与flash相同的功能，比如回放，跳转缓冲等等。与video用法相似。
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>audio标签</title>
+    <style>
+
+    </style>
+</head>
+<body>
+   <audio controls>
+       <source src="xxx.mp3">
+       <source src="xxx.Wav">
+   </audio>
+   Sorry, your browser doesn't support audio. Try another browser.
+</body>
+</html>
+```
+属性：
+- autoplay：自动播放，值的类型为bool，默认为true。
+
+- controls：进度条控制，值的类型为bool。
+
+- loop：循环播放，值的类型为bool。
+
+- muted：静音播放，值的类型为bool。
+
+- poster：预加载图片在播放视频之前，值为图片路径URL。就是我们通常理解的视频封面。
+
+#### 4.canvas标签绘图
+canvas的 html代码很简单，主要重点是js代码的编写。
+
+绘图步骤:
+```
+1 在html5页面中添加canvas元素，定义id方便js调用。
+<canvas id="myCanvas" width = 500 height = 200></canvas>
+
+2 在js代码中通过id获取
+var c = document.getElementById(myCanvas);
+
+3 通过getContext()的方法来获取上下文Context，创建context对象，获取2d绘制环境
+var context = c.getContext("2d");
+
+4 通过js脚本绘制,你喜欢画什么就画什么。
+```
+
+#### 5.SVG标签绘图
+这是使用xml描述2d图形的语言
+
+SVG绘图和canvas绘图都是用来画图，那有什么区别呢？
+
+SVG比canvas绘图好用，SVG不容易失帧，就是更稳定的意思。SVG对前端程序员更友好一点，它比较容易编辑，只需要从描述中移除元素就可以了。
+
+```
+使用svg画圆：
+<svg version="相关版本号，比如1.1">
+      <circle cx = "100" cy = "50"stroke="red" stroke-width="5" fill="black"/>
+      <!--
+			cx:圆心的(x轴)横坐标
+			cy:圆心的(y轴)纵坐标
+			r:圆心的半径
+			stroke：外边线条的颜色
+			stroke-width：外边线条的宽度
+			fill：圆填充的颜色
+	  -->
+</svg>
+```
+#### 6.地理位置
+地理位置能够识别你的定位，并且与别人共享地理信息。
+
+注意：浏览器必须在用户允许情况下才可以发送用户的位置信息给服务器。
+
+步骤：
+```
+（1）调用位置函数
+function get_location() {
+  navigator.geolocation.getCurrentPosition(show_map, handle_error, PositionOptions);
+}//这段js代码功能是触发浏览器弹出信息条，询问user是否分享地理位置。
+//show_map是获取位置信息成功的回调函数
+//handle_error是获取位置信息失败的回调函数
+//PositionOptions是获取地理位置的设置对象
+
+
+（2）show_map获取地理位置
+function show_map(position) {
+  var latitude = position.coords.latitude;//获取纬度
+  var longitude = position.coords.longitude;//获取经度
+}//回调函数要传入position对象
+//position 对象的属性：
+//coords.latitude 纬度，度
+//coords.longtitude 经度，度
+//coords.altitude 海拔，米
+//coords.accuracy 精确度，米
+//coords.altitudeAccuracy 海拔精确度，米
+// coords.heading 方向，度，顺时针，以正北为基准
+//coords.speed 速度，米/秒
+//timestamp 时间戳，类似 Date() 对象
+//这些属性会因为用户的设备和后台定位的服务器不同而出现属性值为null
+
+（3）handle_error容错处理
+function handle_error(e) {
+  switch(e.code)  {//code错误类型
+    case e.PERMISSION_DENIED:
+      //用户拒绝对获取地理位置的请求。
+          //user点击不共享或者拒绝位置共享
+      break;
+    case e.POSITION_UNAVAILABLE:
+      //位置信息是不可用的。
+          //网络不可用或者无法连接到获取位置信息的卫星
+      break;
+    case e.TIMEOUT:
+      //请求用户地理位置超时。
+          //网络可用但是计算超时间
+      break;
+    case e.UNKNOWN_ERROR:
+      //未知错误。
+      break;
+  }
+}
+
+（4）PositionOptions 对象设置
+navigator.geolocation.getCurrentPosition(show_map, handle_error, {enableHighAccuracy: true,timeoout: 170000, maximumAge: 87000})
+//enableHighAccuracy 开启高精度定位，默认 false
+//timeout字面意思，网络请求超时
+//maximumAge允许user将一定时间内缓存的位置信息快速返回给Web应用，默认值0ms
+
+（5）watchPosition() 持续获取:定位检测用户位置的更改，设备自己会找寻一个最佳的时间间隔，定时更改位置信息。
+var watch = navigator.geolocation.watchPosition(show_map, handle_error, {enableHighAccuracy: true,timeoout: 170000, maximumAge: 87000})
+clearWatch(watch);//这个方法用于停止监测user位置信息的更改。
+```
+#### 7.元素拖拽
+这个新特性我也没用过，先放上一些API。
+
+拖拽目标对象的方法
+- setData(format,data)：将指定格式的数据赋值给dataTransfer对象，参数format定义数据的格式也就是数据的类型，data为待赋值的数据
+
+- getData(format)：从dataTransfer对象中获取指定格式的数据，format代表数据格式，data为数据。
+
+- clearData([format])：从dataTransfer对象中删除指定格式的数据，参数可选，若不给出，则为删除对象中所有的数据
+
+- addElement(element)：添加自定义图标
+
+- setDragImage(element,x,y)：设置拖放操作的自定义图标。其中element设置自定义图标，x设置图标与鼠标在水平方向上的距离，y设置图标与鼠标在垂直方向上的距离。
+
+#### 8.Web Worker
+web worker 是运行在后台的 JavaScript，由于js浏览器中的js是单线程的，容易阻塞，计算效率低，Web Worker为js创建多线程环境。js在主线程执行，new一个子线程在后台执行。worker完成计算的任务返回给主线程，UI交互流畅，不会被阻塞。主线程中的代码执行会导致浏览器响应阻塞，而子线程代码执行不会。主线程和子线程两者互补干扰，独立执行。
+
+使用步骤：
+```
+1.创建web worker文件myworkers.js
+
+ var i=0;
+ function timedCount()
+ {
+     i=i+1;
+     postMessage(i);
+     setTimeout("timedCount()",600);
+ } 
+ timedCount(); 
+ //计数器
+
+2.上一步已经创建了一个web worker文件，现在需要在html页面调用它。
+
+2.1 先检测文件是否存在
+
+ if(typeof(w)=="undefined")
+   {
+   w=new Worker("myworkers.js");
+   }
+
+2.2 然后我们就可以从 web worker 发送和接收消息了。向 web worker 添加一个 “onmessage” 事件监听器。
+
+ w.onmessage=function(event){
+ document.getElementById("result").innerHTML=event.data;
+ }; 
+
+2.3 终止web worker
+
+当我们创建 web worker 对象后，它会持续监听消息（即使在外部脚本完成之后）直到其被终止为止。如需终止 web worker，并释放浏览器/计算机资源，可以用terminate() 方法。
+
+ worker.terminate(); 
+```
+#### 9.Web Storage
+主要进行数据存储，分为两类：localStorage和sessionStorage,存储方式是键值对
+
+localStorage和sessionStorage有什么区别？
+
+相同点
+
+- 数据都保存在浏览器客户端
+- 同源，即同域名，同端口，同协议。
+- 操作方法相同。
+
+不同点
+
+- 生命周期不同。localStorage是永久保存，除非用户手动清除数据。sessionStorage是临时保存。
+- 作用域不同。浏览器有很多种，所以无法共享用户数据，也就是不同源的页面无法共享数据。localStorage信息可以在相同浏览器中同源的不同页面，不同标签，不同窗口中共用。sessionStorage不可以在不同页面，不同标签，不同窗口中共用，即使是同源。
+
+主要方法：
+
+- setItem(key,value): 添加一个键值对，存储
+- sessionStorage(会话存储)对象
+- getItem(key): 根据key获取值
+- clear(): 清空sessionStorage(会话存储)的所有键/值对
+- removeItem(key): 从sessionStorage 移除某个项(键值对)
+- key(n): 获取第n个key。
+
+```
+
+1.有两种方式可以把值存储到sessionStoage
+
+// 第一种方式，标准方法
+sessionStorage.setItem('email','xxx@qq.com');
+// 第二种方式，直接当成普通对象属性赋值。
+sessionStorage.blog = 'http://xxxxxx';
+
+2.两种获取值的方法
+// 1. 标准方法
+var email = sessionStorage.getItem('email');
+// 2. 直接取属性值
+var blog = sessionStorage.blog;
+
+3.移除key/value
+// 移除之后，再获取值，将会得到 undefined
+// 根据key，移除键值对
+sessionStorage.removeItem('email');
+
+4.清空sessionStorage
+// 全部清除
+sessionStorage.clear();
+```
+#### 10.Web Socket
+WebSocket是HTML5开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。在WebSocket API中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。浏览器通过 JavaScript 向服务器发出建立 WebSocket 连接的请求，连接建立以后，客户端和服务器端就可以通过 TCP 连接直接交换数据。当你获取 Web Socket 连接后，你可以通过 send() 方法来向服务器发送数据，并通过 onmessage 事件来接收服务器返回的数据。WebSocket 协议本质上是一个基于 TCP 的协议。为了建立一个 WebSocket 连接，客户端浏览器首先要向服务器发起一个 HTTP 请求，这个请求和通常的 HTTP 请求不同，包含了一些附加头信息，其中附加头信息"Upgrade: WebSocket"表明这是一个申请协议升级的 HTTP 请求，服务器端解析这些附加的头信息然后产生应答信息返回给客户端，客户端和服务器端的 WebSocket 连接就建立起来了，双方就可以通过这个连接通道自由的传递信息，并且这个连接会持续存在直到客户端或者服务器端的某一方主动的关闭连接。
+
+1.WebSocket属性:Socket.readyState
+
+- 0：表示连接尚未建立
+
+- 1：表示连接已经建立，可以进行通信
+
+- 2：表示连接正在进行关闭
+
+- 3：表示连接已经关闭或者连接不能打开
+
+2.WebSocket事件
+- open：连接建立时触发
+
+- message：客户端接收服务端数据时触发
+
+- error：通信发生错误时触发
+
+- close：连接关闭时触发
+
+3.WebSocket方法
+- Socket.send()：使用连接发送数据
+
+- Socket.close()：关闭连接
+
+举例子
+```
+<!DOCTYPE HTML>
+<html>
+   <head>
+   <meta charset="utf-8">
+   <title>webscoket</title>
+	
+      <script type="text/javascript">
+         function WebSocketTest()
+         {
+            if ("WebSocket" in window)
+            {
+               alert("您的浏览器支持 WebSocket!");
+               
+               // 打开一个 web socket
+               var ws = new WebSocket("ws://localhost:xxxx/echo");
+				
+               ws.onopen = function()
+               {
+                  // Web Socket 已连接上，使用 send() 方法发送数据
+                  ws.send("发送数据");
+                  alert("数据发送中...");
+               };
+				
+               ws.onmessage = function (evt) 
+               { 
+                  var received_msg = evt.data;
+                  alert("数据已接收...");
+               };
+				
+               ws.onclose = function()
+               { 
+                  // 关闭 websocket
+                  alert("连接已关闭..."); 
+               };
+            }
+            
+            else
+            {
+               // 浏览器不支持 WebSocket
+               alert("您的浏览器不支持 WebSocket!");
+            }
+         }
+      </script>
+		
+   </head>
+   <body>
+   
+      <div id="sse">
+         <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+      </div>
+      
+   </body>
+</html>
+```
