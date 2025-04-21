@@ -140,7 +140,7 @@ git merge 远程库/远程分支 //合并远程分支，在合并之前需要使
 #### 跳到最后一行：字母G
 #### 跳到第n行：ng
 
-### 6.git提交规范
+### 6.hook相关（husky）
 #### 编译相关的修改，例如发布版本、对项目构建或者依赖的改动
 ```
 git commit -m "build: 提示消息"
@@ -189,3 +189,6 @@ git commit -m "config: 提示消息"
 ```
 git commit -m "chore: 提示消息"
 ```
+
+### 7.配置`.gitignore`文件
+
