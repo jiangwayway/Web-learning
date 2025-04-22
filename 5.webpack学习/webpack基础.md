@@ -1,4 +1,4 @@
-# webpack简介
+# webpack基础
 
 
 ### 一、配置文件
@@ -25,7 +25,8 @@ module.exports = {
     // __dirname是nodejs的变量，代表当前文件的文件夹目录，输出目录为当前目录下的 dist 文件夹
     path: path.resolve(__dirname, 'dist'),
     // 输出文件名为 main.js
-    filename: 'main.js'
+    filename: 'main.js',
+    clean: true, // 自动将上次打包目录资源清空
   },
 
   // 定义模式：开发模式或生产模式，开发模式下仅会编译ES6模块化语法，不会编译ES6的箭头函数等，而生产模式下还会做一些压缩和优化。
@@ -87,7 +88,10 @@ module.exports = {
 
 
 
-### 二、loader配置
+### 二、处理样式资源
+为什么要处理样式以及其他资源？
+
+因为webpack仅仅能将js中的ES6模块化语法转化为commonjs语法，并将转化后的js文件输出在dist文件夹中，要是不对其他资源进行处理，那么dist文件夹中就只有js文件，没有CSS文件和图片以及其他资源了，因此，webpack要对所有的静态资源进行处理，最起码要将静态资源复制到dist文件夹中并改变js或者css或者html中的url为复制到dist文件夹后的url地址（比如file-loader可以文件复制到dist文件夹中）。
 
 #### 1.css-loader
 主要负责解析CSS文件内部的依赖结构，并将CSS模块转化为js模块。
@@ -157,4 +161,145 @@ styleElement.textContent = cssContent;
   </style>
 </head>
 
+```
+
+#### 3.处理css资源
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/, 
+        use: [
+          'style-loader', 
+          'css-loader'
+        ]
+      },
+    ]
+  },
+};
+```
+#### 4.处理less资源
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.less$/, 
+        use: [
+          'style-loader', 
+          'css-loader',
+          'less-loader', //将less文件编译为css文件
+        ]
+      },
+    ]
+  },
+};
+```
+
+#### 5.处理scss/sass资源
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/, 
+        use: [
+          'style-loader', 
+          'css-loader',
+          'sass-loader',//将sass文件编译为css文件
+        ]
+      },
+    ]
+  },
+};
+```
+
+### 三、处理图片资源
+
+文件指纹：指的是打包后输出的文件名和后缀
+
+文件指纹可以由以下占位符组成：
+
+- ext：原资源后缀名
+- name：原文件名称
+- path：原文件的相对路径
+- folder：原文件所在的文件夹
+- hash：每次webpack构建时生成一个唯一的hash值
+
+
+#### 1.webpack4的处理方式
+
+
+##### （1）file-loader
+file-loader 会将图片文件打包到输出目录，并返回图片的 URL，开发者可以直接在 CSS 或 JavaScript 中引用图片。配置如下：
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash].[ext]', //默认为[hash].[ext]，可以省略下面的outputPath，简写为'images/[name].[hash].[ext]'
+            outputPath: 'images/' //默认直接放在dist文件夹下，局部设置资源放置路径，优先级高于全局设置
+          }
+        }
+      }
+    ]
+  }
+};
+
+```
+
+##### （2）url-loader
+
+##### （3）raw-loader
+
+
+
+
+#### 2.webpack5的处理方式
+
+在 webpack5 之前，可能需要使用 raw-loader、file-loader、url-loader 来加载资源。
+
+- raw-loader：将文件作为字符串导入
+- file-loader：处理文件的路径并输出文件到输出目录
+- url-loader：有条件将文件转化为 base64 URL，如果文件大于 limit 值，通常交给 file-loader 处理，如果没有设置limit值，默认全部按照base64打包。
+
+在 webpack5+，以上方法已经过时了，webpack5 使用了“资源模块”来代替以上 loader。
+
+资源模块(asset module)是一种模块类型，它允许使用资源文件（字体，图标等）而无需配置额外 loader。
+
+资源模块的类型：
+- asset/resource： 发送一个单独的文件并导出 URL。之前通过使用 `file-loader` 实现。
+- asset/inline： 导出一个资源的 data URI。之前通过使用 `url-loader` 实现。
+- asset/source： 导出资源的源代码。之前通过使用 `raw-loader` 实现。
+- asset： 介于asset/resource和asset/inline之间，在导出一个资源data URI和发送一个单独的文件并导出URL之间做选择，之前通过`url-loader+limit`属性实现。
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        // 用来匹配图片文件。
+        test: /\.(png|jpe?g|gif|webp)$/,
+        type: "asset", //类似于webpakc4中的url-loader+limit,如果不配置图片大小限制，默认是限制大小是8k
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 小于10kb的图片会被base64处理，好处是可以减少http请求，缺点是会增大图片尺寸。
+          },
+        },
+        generator: {
+          filename: "images/[hash:10][ext]", // 指定打包路径和文件名
+        },
+      },
+    ]
+  },
+};
 ```
