@@ -22,7 +22,10 @@ module.exports = {
 
   // 定义输出
   output: {
-    // __dirname是nodejs的变量，代表当前文件的文件夹目录，输出目录为当前目录下的 dist 文件夹
+    // __dirname：__dirname是nodejs的变量，代表当前文件的文件夹绝对路径，
+    //path：文件输出目录，必须是绝对路径
+    //path.resolve：返回一个绝对路径
+    //__filename: 总是返回当前文件的绝对路径
     path: path.resolve(__dirname, 'dist'),
     // 输出文件名为 main.js
     filename: 'main.js',
@@ -239,6 +242,11 @@ file-loader 会将图片文件打包到输出目录，并返回图片的 URL，�
 
 ```
 module.exports = {
+  output: {
+    publicPath：'/assets/'，
+    //会在所有的引用资源前加上该前缀，比如比如url("img/image1.png")会被修改为url("/assets/img/image1.png")，优先级低于局部配置的publicPath属性。
+    //在基于 html-webpack-plugin 进行 webpack build 时，会修改生成的 index.html 文件中的 script、link 等的引用路径，如原来的<script src="main.js"></script> 会被修改为 <script src="/static/main.js"></script>
+  },
   module: {
     rules: [
       {
@@ -247,7 +255,8 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[hash].[ext]', //默认为[hash].[ext]，可以省略下面的outputPath，简写为'images/[name].[hash].[ext]'
-            outputPath: 'images/' //默认直接放在dist文件夹下，局部设置资源放置路径，优先级高于全局设置
+            outputPath: 'images/'， //设置资源放置路径，如不设置则默认直接放在dist文件夹下
+            publicPath: '/assets/' //会修改所有使用该资源的url链接，在原url链接前加上/assets/，比如url("img/image1.png")会被修改为url("/assets/img/image1.png")
           }
         }
       }
@@ -258,11 +267,73 @@ module.exports = {
 ```
 
 ##### （2）url-loader
+url-loader 的功能类似于 file-loader，但它提供了一个额外的功能：当图片文件较小时，通过设置limit属性url-loader 会将图片转为 Base64 格式的内联数据 URI 直接嵌入到打包后的 JavaScript 文件中，从而减少 HTTP 请求,如果不配置limit属性，则所有图片都会被编码为base64的形式。
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 8192,  // 文件小于 8KB 时转换为 Base64
+            name: '[name].[hash].[ext]',
+            outputPath: 'images/'
+          }
+        }
+      }
+    ]
+  }
+};
+
+```
 
 ##### （3）raw-loader
+url-loader可以将文件内容导出为字符串，导出方式为js模块化导出，这样在其他文件中导入该字符串进行使用。
 
+比如有一个这样的txt
 
+```
+this is a txt file
+```
 
+假如你把它当作js来用，import或者require进来的时候，执行this is a txt file这句js，肯定会报错。如果想正常使用，那么这个txt文件需要改成:
+
+```
+export default 'this is a txt file'
+```
+
+最后在要使用的地方进行引入就行了
+
+```
+import txt from '!!raw-loader!/public/test.txt'
+
+console.log(txt);//this is a txt file
+```
+
+默认不用配置，但如果你使用的是 CommonJS模块语法。需要做如下配置：
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.txt$/i,
+        use: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false, //不使用ES6模块化，使用commonjs模块化
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
 
 #### 2.webpack5的处理方式
 
@@ -284,11 +355,20 @@ module.exports = {
 
 ```
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+    // 所有使用type: "asset"处理的静态文件打包后的路径及文件名（默认是走全局的，如果有独立的设置就按照自己独立的设置来。）
+    assetModuleFilename: "assets/[name]_[hash][ext]",
+    publicPath：'/assets/'，//使用与webpack4一致，Webpack 会将所有资源的加载路径都从该路径开始，比如为index.html中引入的<script> <link>等标签中的资源路径添加前缀，CSS文件中url路径前添加前缀等
+  },
   module: {
     rules: [
       {
         // 用来匹配图片文件。
         test: /\.(png|jpe?g|gif|webp)$/,
+        exclude: /node_modules/ //排除node_modules文件夹
+        include: /node_modules/ //只会匹配node_modules文件夹的资源，与exclude二选一
         type: "asset", //类似于webpakc4中的url-loader+limit,如果不配置图片大小限制，默认是限制大小是8k
         parser: {
           dataUrlCondition: {
@@ -296,10 +376,49 @@ module.exports = {
           },
         },
         generator: {
-          filename: "images/[hash:10][ext]", // 指定打包路径和文件名
+          filename: "images/[hash:10][ext]", // 指定打包路径和文件名，优先级高于assetModuleFilename
+          publicPath：'/assets/'，//使用与webpack4一致，在所有使用该资源的url地址前新增公共路径
         },
       },
     ]
   },
 };
 ```
+
+Webpack 5 中的三种 PublicPath 类型
+
+- output.publicPath ：适用于所有输出文件，包括 JavaScript、CSS 和图像。
+
+- module.rules[].generator.publicPath ：覆盖特定加载器或插件生成的输出文件的 URL 前缀。
+
+- devServer ：指定开发服务器上提供文件的 URL 前缀。
+
+### 四、处理字体图标以及其他资源
+
+
+### 五、处理js资源
+
+#### 1.Eslint
+检测代码格式
+
+#### 2.babel
+处理react，vue，es6等，将其转化为es5，使其能在低版本浏览器中运行
+
+### 六、处理html资源
+将所有的打包资源通过link引入到html中
+
+### 七、搭建开发服务器
+
+### 八、开发模式和生产模式配置区别
+原来webpack.config.js配置文件在项目根目录，后面为了区分开发与生产的配置文件，创建了文件夹config，把开发和生产的文件分开了放进去，为啥配置里面的相对路径不变，绝对路径要加个../呢？
+
+个人认为应该是因为这是配置文件，项目打包时肯定是在根目录运行的，通过在命令行中使用`webpakc --config ./config/webpakc.config.js` 打包项目，打包的时候读取config文件夹下的配置文件，`相当于在命令行中将配置文件中的每个配置项拿出来放到命令行中`，比如说配置文件中的`mode: 'development',entry: './src/main.js'`配置项就可能变成`webpakc --entry ./src/main.js --mode development`的类似形式，所以此时配置项中的相对路径就是相对于执行打包命令的目录来说的，而不是配置文件所在的目录。
+
+### 九、提取单独CSS文件
+解决闪屏现象，出现闪屏现象的原因的css样式是通过js语言在html中生成style标签使用的，而浏览器在解析html标签时遇到script标签会先下载js代码再运行js代码，阻塞html解析，在这个过程中浏览器只会显示已经解析的html标签，没有样式，当js代码下载运行完了才会在html中新增style标签，之后浏览器中的元素才会有样式，这就是闪屏现象，如果单独提取css文件在html中通过link引入，就会一边解析html标签（构建DOM树），一边解析css样式（构建CSSOM树），一边渲染元素（通过DOM树和CSSOM树构建渲染树）。这样就不会出现闪屏现象了
+
+白屏现象出现的原因是与上面类似，html中的结构都是通过js生成的，索引刚打开网页的时候浏览器要下载解析js，要是js代码很多，就会出现白屏现象
+
+### 十、处理CSS兼容性
+
+https://caniuse.com/
