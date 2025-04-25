@@ -94,7 +94,7 @@ module.exports = {
 ### 二、处理样式资源
 为什么要处理样式以及其他资源？
 
-因为webpack仅仅能将js中的ES6模块化语法转化为commonjs语法，并将转化后的js文件输出在dist文件夹中，要是不对其他资源进行处理，那么dist文件夹中就只有js文件，没有CSS文件和图片以及其他资源了，因此，webpack要对所有的静态资源进行处理，最起码要将静态资源复制到dist文件夹中并改变js或者css或者html中的url为复制到dist文件夹后的url地址（比如file-loader可以文件复制到dist文件夹中）。
+因为webpack仅仅能将js中的ES6模块化语法转化为commonjs语法，并将转化后的js文件输出在dist文件夹中，要是不对其他资源进行处理，那么dist文件夹中就只有js文件，没有CSS文件和图片以及其他资源了，因此，webpack要对所有的静态资源进行处理，最起码要将静态资源复制到dist文件夹中并改变js或者css或者html中的url为复制到dist文件夹后的url地址。
 
 #### 1.css-loader
 主要负责解析CSS文件内部的依赖结构，并将CSS模块转化为js模块。
@@ -244,7 +244,7 @@ file-loader 会将图片文件打包到输出目录，并返回图片的 URL，�
 module.exports = {
   output: {
     publicPath：'/assets/'，
-    //会在所有的引用资源前加上该前缀，比如比如url("img/image1.png")会被修改为url("/assets/img/image1.png")，优先级低于局部配置的publicPath属性。
+    //会在所有的引用资源前加上该前缀，比如url("img/image1.png")会被修改为url("/assets/img/image1.png")，优先级低于局部配置的publicPath属性。
     //在基于 html-webpack-plugin 进行 webpack build 时，会修改生成的 index.html 文件中的 script、link 等的引用路径，如原来的<script src="main.js"></script> 会被修改为 <script src="/static/main.js"></script>
   },
   module: {
@@ -343,7 +343,7 @@ module.exports = {
 - file-loader：处理文件的路径并输出文件到输出目录
 - url-loader：有条件将文件转化为 base64 URL，如果文件大于 limit 值，通常交给 file-loader 处理，如果没有设置limit值，默认全部按照base64打包。
 
-在 webpack5+，以上方法已经过时了，webpack5 使用了“资源模块”来代替以上 loader。
+在 webpack5+，以上方法已经被webpack内置了，即使不配置相关的loader也能成功加载资源，如果想要配置这些资源，可以使用“资源模块”来代替以上 loader。
 
 资源模块(asset module)是一种模块类型，它允许使用资源文件（字体，图标等）而无需配置额外 loader。
 
@@ -395,11 +395,115 @@ Webpack 5 中的三种 PublicPath 类型
 
 ### 四、处理字体图标以及其他资源
 
+#### 1.处理字体图标
+首先下载字体图标，可以去[阿里巴巴图标库](https://www.iconfont.cn/)下载，选择想要的图标加入到购物车，之后将购物车中的图片添加进项目（可以新建项目加入），之后下载到本地，解压后有个`iconfont.css`文件要加入到项目的css文件夹中并在html文件或者js文件中引入（没有引入的文件是不会被打包的，一般使用`font class`的引用方式），同时`demo_index.html`文件可以查看具体的使用方式。
+
+#### 2.处理字体图标和其他资源的相关配置
+webpack的配置如下：
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        // 用来匹配图片文件。
+        test: /\.(woff2?|ttf|map4|map3|avi)$/,
+        type: "asset/resource",  //不需要使用base64编码
+        generator: {
+          filename: "media/[hash:10][ext]", 
+        },
+      },
+    ]
+  },
+};
+```
 
 ### 五、处理js资源
+由于Webpack 对 js 处理是有限的，只能编译 js 中 ES 模块化语法，不能编译其他语法，导致 js 不能在 IE 等浏览器运行，所以我们希望做一些兼容性处理，将ES6语法编译成ES5语法，其次开发中，团队对代码格式是有严格要求的，我们不能由肉眼去检测代码格式，需要使用专业的工具来检测。。
+#### 1.Eslint配置文件
 
-#### 1.Eslint
-检测代码格式
+配置文件有两种写法：
+
+- 方法一：新建文件.eslintrc.*，位于项目根目录，区别在于配置格式不一样，新建.eslintrc或者.eslintrc.js或者.eslintrc.json文件
+
+- 方法二：不需要创建文件，在原有文件基础上写，即package.json 中 eslintConfig配置项
+
+ESLint 会查找和自动读取它们，所以以上配置文件只需要存在一个即可
+
+我们以 `.eslintrc.js` 配置文件为例：
+
+```
+module.exports = {
+  // 解析选项
+  parserOptions: {
+    ecmaVersion: 6, //使用的是 ES6 语法版本
+    sourceType: "module", // 使用的是 ES6 模块化,还可以是commonjs（commonjs模块化）或者script（不使用模块化）
+    ecmaFeatures: { // ES 其他特性
+      jsx: true // 如果是 React 项目，就需要开启 jsx 语法
+  }
+  },
+  // 具体检查规则，会覆盖extends继承的规则，规则很多，用到的时候可以网上查eslint的规则文档。
+  //"off" 或 0 - 关闭规则
+  //"warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出)
+  //"error" 或 2 - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)
+  rules: {
+    semi: "error", // 禁止使用分号，semi的引号可写可不写
+    'array-callback-return': 'warn', // 强制数组方法的回调函数中有 return 语句，否则警告
+    'default-case': [ //可以有多个参数的情况下，使用数组，第一个参数永远是级别，后面的参数是对规则的补充
+      'warn', // 要求 switch 语句中有 default 分支，否则警告
+      { commentPattern: '^no default$' } // 如果在最后一个case最后有//no default注释, 就不会有警告
+    ],
+    eqeqeq: [
+      'warn', // 强制使用 === 和 !==，否则警告
+      'smart' // 少数情况下不会有警告（比如说比较两个具体的值，使用typeof的比较，与null进行比较）
+    ],
+    "no-var": 2, // 不能使用 var 定义变量
+  },
+  // 继承其他规则，开发中一点点写 rules 规则太费劲了，所以有更好的办法，继承现有的规则。
+  //Eslint 官方的规则：eslint:recommended
+  //Vue Cli 官方的规则：plugin:vue/essential
+  //React Cli 官方的规则：react-app
+  extends: ['eslint:recommended'],
+  //是否允许使用环境变量
+  env: {
+    node: true, // 启用node中全局变量global等
+    browser: true, // 启用浏览器中全局变量window,document等
+  },
+
+};
+```
+
+#### 2.webpack中使用eslint
+
+下载eslint插件和eslint：
+```
+npm i eslint-webpack-plugin eslint -D
+```
+
+在webpack.config.js文件中进行配置
+
+```
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+
+module.exports = {
+  plugins: [
+    new ESLintWebpackPlugin({
+      // 指定检查文件的根目录
+      context: path.resolve(__dirname, "src"),
+    }),
+  ],
+};
+```
+
+一般我们会在 VSCode 中使用 Eslint 插件，即可不用编译就能看到错误，可以提前解决
+
+但是此时就会对项目所有文件默认进行 Eslint 检查了，我们 dist 目录下的打包后文件就会报错。但是我们只需要检查 src 下面的文件，不需要检查 dist 下面的文件。
+
+所以可以使用 Eslint 忽略文件解决。在项目根目录新建下面文件:.eslintignore
+
+```
+# 忽略dist目录下所有文件
+dist
+```
 
 #### 2.babel
 处理react，vue，es6等，将其转化为es5，使其能在低版本浏览器中运行
@@ -422,3 +526,6 @@ Webpack 5 中的三种 PublicPath 类型
 ### 十、处理CSS兼容性
 
 https://caniuse.com/
+
+
+tree shaking（使用treeshaking必须要编译成ES6，要是编译成ES6，浏览器怎么识别呢？）,sideEffect,多入口打包（公共模块单独打包，node_module单独打包，动态导入单独打包），单入口打包（node_module单独打包，动态导入单独打包）
