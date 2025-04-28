@@ -27,7 +27,7 @@
 解决方法：
 
 通过css字符间隔属性`letter-spacing`消除`<li>`中空格符间隙，其中空格的默认间隙为8px，那么我们可以这样写：
-```
+```less
 .box ul{
 	letter-spacing: -8px;   // 去除ul内的字符间距
 }
@@ -40,9 +40,9 @@
 
 //去除小圆点
 ul li {
-  ist-sytle: none
-  或者
-  list-style-type: none
+  list-sytle: none;
+  //或者
+  list-style-type: none;
 }
 ```
 
@@ -73,7 +73,7 @@ text-overflow: ellipsis;//溢出用省略号显示
 white-space: nowrap;// 规定段落中的文本不进行换行
 ```
 - 多行文本溢出
-```
+```less
 overflow: hidden;// 溢出隐藏
 text-overflow: ellipsis;//溢出用省略号显示
 display:-webkit-box;// 作为弹性伸缩盒子模型显示。
