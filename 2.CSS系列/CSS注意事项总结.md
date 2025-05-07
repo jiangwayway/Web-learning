@@ -27,6 +27,7 @@
 解决方法：
 
 通过css字符间隔属性`letter-spacing`消除`<li>`中空格符间隙，其中空格的默认间隙为8px，那么我们可以这样写：
+
 ```less
 .box ul{
 	letter-spacing: -8px;   // 去除ul内的字符间距
@@ -66,37 +67,45 @@ CSS的三种使用方式分别是：
 - 需要在border内测添加空白，且空白处需要背景（色）时，使用 padding。
 
 #### 9.单行、多行文本溢出隐藏
+
 - 单行文本溢出
+
 ```
 overflow: hidden;// 溢出隐藏
 text-overflow: ellipsis;//溢出用省略号显示
 white-space: nowrap;// 规定段落中的文本不进行换行
 ```
+
 - 多行文本溢出
+
 ```less
 overflow: hidden;// 溢出隐藏
 text-overflow: ellipsis;//溢出用省略号显示
 display:-webkit-box;// 作为弹性伸缩盒子模型显示。
 -webkit-box-orient:vertical;//设置伸缩盒子的子元素排列方式:从上到下垂直排列-webkit-line-clamp:3;// 显示的行数
-
 ```
+
 #### 10.如何判断元素到达可视区域
 
 #### 11.样式兼容
 css3作为页面样式的表现语言，增加了很多新的属性，但是部分css3属性在一些浏览器上还处于试验阶段，所以为了有效的显示css3的样式，对应不同的浏览器内核需要不同的前缀声明，例如：
+
 ```
 -moz- ：Firefox，GEcko引擎
 -webkit-： Safari和Chrome，Webkit引擎
 -o- ：Opera（早期），Presto引擎，后改为Webkit引擎
 -ms- ：Internet Explorer，Trident引擎
 ```
+
 使用这些前缀，才能保证css3的属性在特定浏览器渲染引擎下生效。统一引擎一般不识别其它引擎的前缀，目前移动端的浏览器相对比较统一，都是采用的webkit引擎，所以如果我们只需要兼容移动端，只需要带-webkit-前缀即可。
 
 在使用css3新属性的时候，一般需要把带有前缀的属性放于前面，把不带前缀的版本放到最后一行：
+
 ```
 1 -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 2 -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 3 -o-box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 4 box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 ```
+
 随着浏览器的升级，目前大多数新版本浏览器都已经支持不带前缀的写法了，所以带前缀只是为了兼容低版本，不带前缀的才是标准属性。
