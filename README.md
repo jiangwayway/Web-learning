@@ -12,3 +12,11 @@
 基础进阶：[CSS深入了解](https://juejin.cn/post/6844903894313598989)
 
 ### JS学习
+
+
+目前进度HTML、CSS、git、webpack基本完成
+
+下一步计划：
+1.css实战多练练（包括tail的使用）
+2.react全家桶复习一遍，包括项目(两周)
+3.es6语法总结和ts（一周）
