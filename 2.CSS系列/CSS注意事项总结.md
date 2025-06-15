@@ -26,7 +26,7 @@
 
 解决方法：
 
-通过css字符间隔属性`letter-spacing`消除`<li>`中空格符间隙，其中空格的默认间隙为8px，那么我们可以这样写：
+方式一：通过css字符间隔属性`letter-spacing`消除`<li>`中空格符间隙，其中空格的默认间隙为8px，那么我们可以这样写：
 
 ```less
 .box ul{
@@ -44,6 +44,22 @@ ul li {
   list-sytle: none;
   //或者
   list-style-type: none;
+}
+```
+
+方式二：父元素设置font-size为0，子元素重新设置font-size为原来的大小。
+
+注意：使用这种方式的时候，我发现父元素的高度会变化，比如原来设置了行高为30px，那么将font-size设置为0后，父元素的行高会变大，具体的原因我也没搞懂，解决的话将父元素的行高设置为0，子元素的行高设置为30px就可以解决了，好像是基线对齐的问题，网上有一篇[文章](https://www.mulingyuer.com/archives/124/#heading-1)有提到
+
+```less
+.box ul{
+	font-size: 0;   // 将全部字符大小设置为0
+}
+.box li {
+     width:25%; 
+     height: 150px;
+     display: inline-block;
+     font-size: 12px;  // 将文字设置为正常大小
 }
 ```
 
